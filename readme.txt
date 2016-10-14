@@ -38,6 +38,10 @@ it add `css` filter property into `body`
 
 1. Demo (screenshot-1.jpg)
 
+== Upgrade Notice ==
+
+Not available
+
 == Changelog ==
 
 = 1.0.0 (14 Oct 2016) =
