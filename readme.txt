@@ -14,6 +14,7 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Automatically turn the site to grayscale (may be used for some purpose)
 
 Compatible with all browsers:
+
 * [Google Chrome](https://www.google.com/chrome/) 19+
 * [Mozilla Firefox](https://www.mozilla.org/firefox/)
 * [Safari](http://www.apple.com/safari/) 6+
