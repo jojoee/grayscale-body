@@ -15,7 +15,7 @@ Automatically turn the site to grayscale (may be used for some purpose)
 
 Features:
 
-* Grayscale / Color switcher
+* Grayscale / Color switcher (for non-IE)
 
 Compatible with all browsers:
 
