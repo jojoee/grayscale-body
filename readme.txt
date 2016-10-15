@@ -59,6 +59,9 @@ it add `css` filter property into `body`
 
 == Changelog ==
 
+= 1.2.1 =
+* Support PHP below 5.4
+
 = 1.2.0 =
 * Add Theme option
 
