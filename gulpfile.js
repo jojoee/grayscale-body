@@ -12,6 +12,7 @@ gulp.task('connect-sync', function() {
   gulp.watch([
     '**/*.php',
     'css/*.css',
+    'js/*.js',
   ]).on('change', function() {
     browserSync.reload();
   });

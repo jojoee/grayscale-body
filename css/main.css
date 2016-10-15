@@ -1,8 +1,50 @@
-body {
+body.gsb-grayscale {
   -webkit-filter: grayscale(100%);
   -moz-filter: grayscale(100%);
   -ms-filter: grayscale(100%);
   -o-filter: grayscale(100%);
   filter: grayscale(100%);
   filter: gray; /* IE 6-9 */
+}
+
+body.gsb-color {
+
+}
+
+.gsb-switcher {
+  height: 32px;
+  width: 82px;
+  position: fixed;
+  top: 12px;
+  right: 12px;
+  text-align: center;
+  border: 1px solid #cecece;
+  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.6);
+  display: block;
+  cursor: pointer;
+  box-sizing: border-box;
+  z-index: 99;
+}
+
+.gsb-switcher:active {
+  top: 14px;
+}
+
+.gsb-switcher:after {
+  height: 100%;
+  width: 100%;
+  line-height: 30px;
+  box-sizing: border-box;
+  font-family: sans-serif;
+  font-size: 14px;
+  display: block;
+}
+
+.gsb-switcher.grayscale:after {
+  content: 'Grayscale';
+}
+
+.gsb-switcher.color:after {
+  content: 'Color';
 }
