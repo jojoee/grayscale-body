@@ -24,7 +24,7 @@ body.gsb-color {
   display: block;
   cursor: pointer;
   box-sizing: border-box;
-  z-index: 99;
+  z-index: 9999;
 }
 
 .gsb-switcher:active {
