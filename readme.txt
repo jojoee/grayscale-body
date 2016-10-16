@@ -59,6 +59,11 @@ it add `css` filter property into `body`
 
 == Changelog ==
 
+= 1.2.2 =
+* Update switcher text
+* Add switcher move2left option
+* Update switcher z-index
+
 = 1.2.1 =
 * Support PHP below 5.4
 
