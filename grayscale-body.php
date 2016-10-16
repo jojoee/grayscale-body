@@ -37,9 +37,6 @@ class Grayscale_Body {
     // hook
     add_action( 'wp_enqueue_scripts', array( $this, 'gsb_enqueue_scripts' ) );
     add_action( 'wp_head', array( $this, 'gsb_head' ) );
-
-    // action
-    $is_switcher_move2left = $this->options['gsb_field_is_switcher_move2left'];
   }
 
   /*================================================================ Debug
