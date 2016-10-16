@@ -86,19 +86,37 @@ class Grayscale_Body {
   }
 
   public function gsb_enqueue_scripts() {
+    $is_enabled = $this->options['gsb_field_is_enabled'];
     $is_enable_switcher = $this->options['gsb_field_is_enable_switcher'];
 
-    if ( $is_enable_switcher ) {
-      wp_enqueue_style( 'gsb-main-style', plugins_url( 'css/main.css', __FILE__ ) );
-      wp_enqueue_script( 'gsb-main-script', plugins_url('js/main.js', __FILE__), array(), '120', true);
+    if ( $is_enabled ) {
+      if ( $is_enable_switcher ) {
+        wp_enqueue_style( 'gsb-main-style', plugins_url( 'css/main.css', __FILE__ ) );
+        wp_enqueue_script( 'gsb-main-script', plugins_url('js/main.js', __FILE__), array(), '120', true);
 
-    } else {
-      wp_enqueue_style( 'gsb-main-style-noswitcher', plugins_url( 'css/main-noswitcher.css', __FILE__ ) );
+      } else {
+        wp_enqueue_style( 'gsb-main-style-noswitcher', plugins_url( 'css/main-noswitcher.css', __FILE__ ) );
+      }
     }
   }
 
   /*================================================================ Callback
    */
+  
+  public function gsb_field_is_enabled_callback() {
+    $field_id = 'gsb_field_is_enabled';
+    $field_name = $this->option_field_name . "[$field_id]";
+    $field_value = 1;
+    $check_attr = checked( 1, $this->options[ $field_id ], false );
+
+    printf(
+      '<input type="checkbox" id="%s" name="%s" value="%s" %s />',
+      $field_id,
+      $field_name,
+      $field_value,
+      $check_attr
+    );
+  }
 
   public function gsb_field_is_enable_switcher_callback() {
     $field_id = 'gsb_field_is_enable_switcher';
@@ -137,12 +155,14 @@ class Grayscale_Body {
     // default
     // 
     // [
+    //   'gsb_field_is_enabled'             => 1
     //   'gsb_field_is_enable_switcher'     => 0
     //   'gsb_field_is_switcher_move2left'  => 0
     // ]
 
     $options = $this->options;
 
+    if ( ! isset( $options['gsb_field_is_enabled'] ) )              $options['gsb_field_is_enabled'] = 1;
     if ( ! isset( $options['gsb_field_is_enable_switcher'] ) )      $options['gsb_field_is_enable_switcher'] = 0;
     if ( ! isset( $options['gsb_field_is_switcher_move2left'] ) )   $options['gsb_field_is_switcher_move2left'] = 0;
 
@@ -214,8 +234,17 @@ class Grayscale_Body {
     );
 
     // option field(s)
+    // - is_enabled
     // - is_enable_switcher
     // - is_switcher_move2left
+    add_settings_field(
+      'gsb_field_is_enabled',
+      'Enable',
+      array( $this, 'gsb_field_is_enabled_callback' ),
+      $this->menu_page,
+      $section_id
+    );
+
     add_settings_field(
       'gsb_field_is_enable_switcher',
       'Enable switcher',
@@ -256,6 +285,7 @@ class Grayscale_Body {
 
     // number
     $number_input_ids = array(
+      'gsb_field_is_enabled',
       'gsb_field_is_enable_switcher',
       'gsb_field_is_switcher_move2left'
     );
