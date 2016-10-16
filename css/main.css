@@ -31,6 +31,10 @@ body.gsb-color {
   top: 14px;
 }
 
+.gsb-switcher.move2left {
+  left: 12px;
+}
+
 .gsb-switcher:after {
   height: 100%;
   width: 100%;

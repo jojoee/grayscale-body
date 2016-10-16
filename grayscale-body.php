@@ -34,8 +34,12 @@ class Grayscale_Body {
     // add plugin link
     add_filter( 'plugin_action_links', array( $this, 'gsb_plugin_action_links' ), 10, 4 );
 
-    // enqueue_style
+    // hook
     add_action( 'wp_enqueue_scripts', array( $this, 'gsb_enqueue_scripts' ) );
+    add_action( 'wp_head', array( $this, 'gsb_head' ) );
+
+    // action
+    $is_switcher_move2left = $this->options['gsb_field_is_switcher_move2left'];
   }
 
   /*================================================================ Debug
@@ -73,6 +77,13 @@ class Grayscale_Body {
 
   /*================================================================ Public
    */
+  
+  public function gsb_head() { ?>
+    <script>
+      var gsbOption = '<?php echo json_encode( $this->options ); ?>';
+    </script>
+    <?php
+  }
 
   public function gsb_enqueue_scripts() {
     $is_enable_switcher = $this->options['gsb_field_is_enable_switcher'];
@@ -104,6 +115,21 @@ class Grayscale_Body {
     );
   }
 
+  public function gsb_field_is_switcher_move2left_callback() {
+    $field_id = 'gsb_field_is_switcher_move2left';
+    $field_name = $this->option_field_name . "[$field_id]";
+    $field_value = 1;
+    $check_attr = checked( 1, $this->options[ $field_id ], false );
+
+    printf(
+      '<input type="checkbox" id="%s" name="%s" value="%s" %s />',
+      $field_id,
+      $field_name,
+      $field_value,
+      $check_attr
+    );
+  }
+
   /*================================================================ Option
    */
 
@@ -111,12 +137,14 @@ class Grayscale_Body {
     // default
     // 
     // [
-    //   'gsb_field_is_enable_switcher' => 0
+    //   'gsb_field_is_enable_switcher'     => 0
+    //   'gsb_field_is_switcher_move2left'  => 0
     // ]
 
     $options = $this->options;
 
-    $options['gsb_field_is_enable_switcher'] = ( ! isset( $options['gsb_field_is_enable_switcher'] ) ) ? 0 : 1;
+    $options['gsb_field_is_enable_switcher']    = ( ! isset( $options['gsb_field_is_enable_switcher'] ) ) ? 0 : 1;
+    $options['gsb_field_is_switcher_move2left'] = ( ! isset( $options['gsb_field_is_switcher_move2left'] ) ) ? 0 : 1;
 
     $this->options = $options;
   }
@@ -187,10 +215,19 @@ class Grayscale_Body {
 
     // option field(s)
     // - is_enable_switcher
+    // - is_switcher_move2left
     add_settings_field(
       'gsb_field_is_enable_switcher',
       'Enable switcher',
       array( $this, 'gsb_field_is_enable_switcher_callback' ),
+      $this->menu_page,
+      $section_id
+    );
+
+    add_settings_field(
+      'gsb_field_is_switcher_move2left',
+      'Switcher: move to left',
+      array( $this, 'gsb_field_is_switcher_move2left_callback' ),
       $this->menu_page,
       $section_id
     );

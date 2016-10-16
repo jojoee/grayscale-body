@@ -15,6 +15,7 @@ var GrayscaleBody = function() {
   this.localStorageStateKey = 'gsbState';
   this.prevState;
   this.currentState;
+  this.option;
 
   /*================================================================ Local storage
    */
@@ -48,6 +49,7 @@ var GrayscaleBody = function() {
     swticherEle.id = swticherName;
     swticherEle.className = swticherName;
     swticherEle.classList.add(this.currentState);
+    if (this.option.gsb_field_is_switcher_move2left) swticherEle.classList.add('move2left');
     swticherEle.onclick = function(event) {
       var newCurrentState = (self.currentState === self.grayscaleStateName) ?
         self.colorStateName :
@@ -87,6 +89,7 @@ var GrayscaleBody = function() {
     this.bodyEle = document.getElementsByTagName('body')[0];
     this.prevState = this.getCurrentStateFromLocalStorage();
     this.currentState = this.getCurrentStateFromLocalStorage();
+    this.option = JSON.parse(gsbOption);
 
     this.updateBodyCurrentState();
     this.initSwitcher();
