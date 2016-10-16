@@ -130,19 +130,41 @@ class Grayscale_Body {
     );
   }
 
-  public function gsb_field_is_switcher_move2left_callback() {
-    $field_id = 'gsb_field_is_switcher_move2left';
+  public function gsb_field_switcher_position_callback() {
+    $field_id = 'gsb_field_switcher_position';
     $field_name = $this->option_field_name . "[$field_id]";
-    $field_value = 1;
-    $check_attr = checked( 1, $this->options[ $field_id ], false );
-
-    printf(
-      '<input type="checkbox" id="%s" name="%s" value="%s" %s />',
-      $field_id,
-      $field_name,
-      $field_value,
-      $check_attr
+    $positions = array(
+      array(
+        'value'     => 'top-left',
+        'name'      => 'Top left'
+      ),
+      array(
+        'value'     => 'top-right',
+        'name'      => 'Top right'
+      ),
+      array(
+        'value'     => 'bottom-left',
+        'name'      => 'Bottom left'
+      ),
+      array(
+        'value'     => 'bottom-right',
+        'name'      => 'Bottom right'
+      )
     );
+
+    printf( '<select id="%s" name="%s">', $field_id, $field_name );
+    foreach ( $positions as $position ) {
+      $value = $position['value'];
+      $name = $position['name'];
+      $select_attr = selected( $this->options[ $field_id ], $value, false );
+
+      printf( '<option value="%s" %s>%s</option>',
+        $value,
+        $select_attr,
+        $name
+      );
+    }
+    echo '</select>';
   }
 
   /*================================================================ Option
@@ -154,14 +176,17 @@ class Grayscale_Body {
     // [
     //   'gsb_field_is_enabled'             => 1
     //   'gsb_field_is_enable_switcher'     => 0
-    //   'gsb_field_is_switcher_move2left'  => 0
+    //   'gsb_field_switcher_position'      => 'top-right'
     // ]
 
     $options = $this->options;
 
     if ( ! isset( $options['gsb_field_is_enabled'] ) )              $options['gsb_field_is_enabled'] = 1;
     if ( ! isset( $options['gsb_field_is_enable_switcher'] ) )      $options['gsb_field_is_enable_switcher'] = 0;
-    if ( ! isset( $options['gsb_field_is_switcher_move2left'] ) )   $options['gsb_field_is_switcher_move2left'] = 0;
+
+    if ( ! isset( $options['gsb_field_switcher_position'] ) || ( $options['gsb_field_switcher_position'] === '' ) ) {
+      $options['gsb_field_switcher_position'] = 'top-right';
+    }
 
     $this->options = $options;
   }
@@ -233,7 +258,7 @@ class Grayscale_Body {
     // option field(s)
     // - is_enabled
     // - is_enable_switcher
-    // - is_switcher_move2left
+    // - switcher_position
     add_settings_field(
       'gsb_field_is_enabled',
       'Enable',
@@ -251,9 +276,9 @@ class Grayscale_Body {
     );
 
     add_settings_field(
-      'gsb_field_is_switcher_move2left',
-      'Switcher: move to left',
-      array( $this, 'gsb_field_is_switcher_move2left_callback' ),
+      'gsb_field_switcher_position',
+      'Switcher: position',
+      array( $this, 'gsb_field_switcher_position_callback' ),
       $this->menu_page,
       $section_id
     );
@@ -272,8 +297,9 @@ class Grayscale_Body {
     $result = array();
 
     // text
-    // (unused)
-    $text_input_ids = array();
+    $text_input_ids = array(
+      'gsb_field_switcher_position'
+    );
     foreach ( $text_input_ids as $text_input_id ) {
       $result[ $text_input_id ] = isset( $input[ $text_input_id ] )
         ? sanitize_text_field( $input[ $text_input_id ] )
@@ -283,8 +309,7 @@ class Grayscale_Body {
     // number
     $number_input_ids = array(
       'gsb_field_is_enabled',
-      'gsb_field_is_enable_switcher',
-      'gsb_field_is_switcher_move2left'
+      'gsb_field_is_enable_switcher'
     );
     foreach ( $number_input_ids as $number_input_id ) {
       $result[ $number_input_id ] = isset( $input[ $number_input_id ] )

@@ -15,8 +15,6 @@ body.gsb-color {
   height: 32px;
   width: 82px;
   position: fixed;
-  top: 12px;
-  right: 12px;
   text-align: center;
   border: 1px solid #cecece;
   border-radius: 3px;
@@ -28,11 +26,27 @@ body.gsb-color {
 }
 
 .gsb-switcher:active {
-  top: 14px;
+  border: 1px solid #868686;
 }
 
-.gsb-switcher.move2left {
+.gsb-switcher.top-left {
+  top: 12px;
   left: 12px;
+}
+
+.gsb-switcher.top-right {
+  top: 12px;
+  right: 12px;
+}
+
+.gsb-switcher.bottom-left {
+  bottom: 12px;
+  left: 12px;
+}
+
+.gsb-switcher.bottom-right {
+  bottom: 12px;
+  right: 12px;
 }
 
 .gsb-switcher:after {

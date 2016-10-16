@@ -49,7 +49,7 @@ var GrayscaleBody = function() {
     swticherEle.id = swticherName;
     swticherEle.className = swticherName;
     swticherEle.classList.add(this.currentState);
-    if (this.option.gsb_field_is_switcher_move2left) swticherEle.classList.add('move2left');
+    swticherEle.classList.add(this.option.gsb_field_switcher_position);
     swticherEle.onclick = function(event) {
       var newCurrentState = (self.currentState === self.grayscaleStateName) ?
         self.colorStateName :
