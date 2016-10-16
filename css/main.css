@@ -42,9 +42,9 @@ body.gsb-color {
 }
 
 .gsb-switcher.grayscale:after {
-  content: 'Grayscale';
+  content: 'Color';
 }
 
 .gsb-switcher.color:after {
-  content: 'Color';
+  content: 'Grayscale';
 }
