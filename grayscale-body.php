@@ -247,7 +247,7 @@ class Grayscale_Body {
     $plugin_link = array();
 
     if ( $plugin_file == GSB_BASE_FILE ) {
-      $plugin_link[0] = '<a href="' . admin_url( 'options-general.php?page=' . $this->menu_page ) . '">Settings</a>';
+      $plugin_link[] = '<a href="' . admin_url( 'options-general.php?page=' . $this->menu_page ) . '">Settings</a>';
     }
 
     return array_merge( $links, $plugin_link );
