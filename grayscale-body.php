@@ -143,8 +143,8 @@ class Grayscale_Body {
 
     $options = $this->options;
 
-    $options['gsb_field_is_enable_switcher']    = ( ! isset( $options['gsb_field_is_enable_switcher'] ) ) ? 0 : 1;
-    $options['gsb_field_is_switcher_move2left'] = ( ! isset( $options['gsb_field_is_switcher_move2left'] ) ) ? 0 : 1;
+    if ( ! isset( $options['gsb_field_is_enable_switcher'] ) )      $options['gsb_field_is_enable_switcher'] = 0;
+    if ( ! isset( $options['gsb_field_is_switcher_move2left'] ) )   $options['gsb_field_is_switcher_move2left'] = 0;
 
     $this->options = $options;
   }
@@ -237,10 +237,35 @@ class Grayscale_Body {
     print 'Enter your settings below:';
   }
 
+  /**
+   * Sanitize each setting field as needed
+   *
+   * @param array $input Contains all settings fields as array keys
+   */
   public function sanitize( $input ) {
-    // nothing now, cause all inputs is checkbox
-    
-    return $input;
+    $result = array();
+
+    // text
+    // (unused)
+    $text_input_ids = array();
+    foreach ( $text_input_ids as $text_input_id ) {
+      $result[ $text_input_id ] = isset( $input[ $text_input_id ] )
+        ? sanitize_text_field( $input[ $text_input_id ] )
+        : '';
+    }
+
+    // number
+    $number_input_ids = array(
+      'gsb_field_is_enable_switcher',
+      'gsb_field_is_switcher_move2left'
+    );
+    foreach ( $number_input_ids as $number_input_id ) {
+      $result[ $number_input_id ] = isset( $input[ $number_input_id ] )
+        ? sanitize_text_field( $input[ $number_input_id ] )
+        : 0;
+    }
+
+    return $result;
   }
 
   public function gsb_plugin_action_links( $links, $plugin_file ) {
