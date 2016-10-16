@@ -16,7 +16,7 @@ Automatically turn the site to grayscale (may be used for some purpose)
 Features:
 
 * Grayscale / Color switcher (for non-IE)
-* Theme option to enable / disable switcher
+* Theme option to enable / disable switcher and select switcher position
 
 Compatible with all browsers:
 
@@ -30,7 +30,7 @@ Compatible with all browsers:
 
 1. Install the plugin via admin plguins screen or download and upload this plugin into `wp-content/plugins` directory
 2. Activate the plugin through the **Plugins** menu in WordPress
-3. Enable `switcher` via `Settings > Grayscale Body` (optional)
+3. Enable `switcher` and select `switcher position` via `Settings > Grayscale Body` (optional)
 4. Done
 
 == Frequently Asked Questions ==
@@ -51,6 +51,9 @@ it add `css` filter property into `body`
 
 == Upgrade Notice ==
 
+= 1.2.3 =
+* Update switcher position
+
 = 1.2.0 =
 * Add Theme option
 
@@ -58,6 +61,9 @@ it add `css` filter property into `body`
 * Update browser compatibility
 
 == Changelog ==
+
+= 1.2.3 =
+* 4 switcher positions
 
 = 1.2.2 =
 * Update switcher text
@@ -93,8 +99,10 @@ it add `css` filter property into `body`
 * [x] Theme option
 * [ ] Unit test
 * [ ] UAT test
+* [ ] Localization
 
 = Thank you =
 * [WordPress Plugin readme.txt Validator](https://wordpress.org/plugins/about/validator/)
 * [Autoprefixer CSS online](https://autoprefixer.github.io/)
 * [TinyPNG](https://tinypng.com/)
+* [PHP code syntax check](https://www.piliapp.com/php-syntax-check/)

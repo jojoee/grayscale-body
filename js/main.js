@@ -1,3 +1,8 @@
+/**
+ * Main script
+ * latest update: 1.2.3
+ */
+
 var gsbDebug = false;
 
 var gsbIsIE = function() {
