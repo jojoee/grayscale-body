@@ -17,7 +17,7 @@
   "homepage": "https://github.com/jojoee/grayscale-body#readme",
   "dependencies": {
     "browser-sync": "^2.14.0",
-    "gulp": "^3.9.1",
-    "gulp-connect-php": "0.0.8"
+    "gulp": "^4.0.0",
+    "gulp-connect-php": "1.0.3"
   }
 }
