@@ -4,8 +4,7 @@ Contributors: jojoee
 Donate link: 
 Tags: grayscale, black, white, black and white, site, convert, conversion, CSS, CSS3, filter
 Requires at least: 3.0.1
-Tested up to: 4.6.1
-Stable tag: 4.3
+Tested up to: 5.3.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -50,6 +49,9 @@ it add `css` filter property into `body`
 3. Theme option (screenshot-3.jpg)
 
 == Upgrade Notice ==
+
+= 1.2.4 =
+* Retest the plugin against WordPress 5.3.2
 
 = 1.2.3 =
 * Update switcher position

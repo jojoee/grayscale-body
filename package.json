@@ -3,7 +3,7 @@
   "description": "Automatically turn the site to grayscale",
   "main": "gulpfile.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "zip": "gulp pack.zip"
   },
   "repository": {
     "type": "git",
@@ -17,7 +17,10 @@
   "homepage": "https://github.com/jojoee/grayscale-body#readme",
   "dependencies": {
     "browser-sync": "^2.14.0",
+    "fs": "^0.0.1-security",
     "gulp": "^3.9.1",
-    "gulp-connect-php": "0.0.8"
+    "gulp-connect-php": "0.0.8",
+    "gulp-clean": "^0.3.2",
+    "gulp-zip": "^4.0.0"
   }
 }
