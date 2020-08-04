@@ -4,7 +4,7 @@ Contributors: jojoee
 Donate link: 
 Tags: grayscale, black, white, black and white, site, convert, conversion, CSS, CSS3, filter
 Requires at least: 3.0.1
-Tested up to: 5.3.2
+Tested up to: 5.4.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -27,7 +27,7 @@ Compatible with all browsers:
 
 == Installation ==
 
-1. Install the plugin via admin plguins screen or download and upload this plugin into `wp-content/plugins` directory
+1. Install the plugin via admin plugins screen or download and upload this plugin into `wp-content/plugins` directory
 2. Activate the plugin through the **Plugins** menu in WordPress
 3. Enable `switcher` and select `switcher position` via `Settings > Grayscale Body` (optional)
 4. Done
@@ -94,14 +94,11 @@ it add `css` filter property into `body`
 * [Repository on Github](https://github.com/jojoee/grayscale-body)
 
 = TODO =
-* [ ] Support IE edge
-* [ ] DocBlockr
-* [ ] Grayscale opacity customizer
 * [x] Switcher
 * [x] Theme option
-* [ ] Unit test
-* [ ] UAT test
 * [ ] Localization
+* [ ] Separate utility out of main plugin file
+* [ ] Using the feature from [grayscale-body-js](https://github.com/jojoee/grayscale-body-js) instead
 
 = Thank you =
 * [WordPress Plugin readme.txt Validator](https://wordpress.org/plugins/about/validator/)
