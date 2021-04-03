@@ -4,7 +4,7 @@ Contributors: jojoee
 Donate link: 
 Tags: grayscale, black, white, black and white, site, convert, conversion, CSS, CSS3, filter
 Requires at least: 3.0.1
-Tested up to: 5.4.2
+Tested up to: 5.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -16,6 +16,9 @@ Features:
 
 * Grayscale / Color switcher (for non-IE)
 * Theme option to enable / disable switcher and select switcher position
+* Default mode, ability to set default which either "grayscale" or "color"
+* Ignored Post IDs, user can display this plugin for specific posts by post IDs
+* Custom css
 
 Compatible with all browsers:
 
@@ -49,6 +52,12 @@ it add `css` filter property into `body`
 3. Theme option (screenshot-3.jpg)
 
 == Upgrade Notice ==
+
+= 1.2.5 =
+* Retest the plugin against WordPress 5.7
+* Default mode
+* Ignored Post IDs
+* Custom css
 
 = 1.2.4 =
 * Retest the plugin against WordPress 5.3.2
