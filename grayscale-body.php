@@ -42,6 +42,22 @@ class Grayscale_Body {
     add_action( 'wp_head', array( $this, 'gsb_head' ) );
   }
 
+  /*================================================================ Util
+   */
+
+  /**
+   * Check is null or empty string
+   *
+   * @see http://stackoverflow.com/questions/381265/better-way-to-check-variable-for-null-or-empty-string
+   *
+   * @param string $str
+   *
+   * @return boolean
+   */
+  private function is_null_or_empty_string( $str ) {
+    return ( ! isset( $str ) || trim( $str ) === '' );
+  }
+
   /*================================================================ Debug
    */
 
@@ -79,8 +95,16 @@ class Grayscale_Body {
 
   /*================================================================ Public
    */
+  public function gsb_head() {
+    $is_enabled = $this->options['gsb_field_is_enabled'];
+    $custom_css = $this->options['gsb_field_custom_css'];
 
-  public function gsb_head() { ?>
+    // custom css
+    if ( $is_enabled && ! $this->is_null_or_empty_string( $custom_css ) ) {
+      printf( '<style>%s</style>', $custom_css );
+    }
+    ?>
+
     <script>
       var gsbOption = '<?php echo json_encode( $this->options ); ?>'
     </script>
@@ -172,6 +196,20 @@ class Grayscale_Body {
     echo '</select>';
   }
 
+  public function gsb_field_custom_css_callback() {
+    $field_id    = 'gsb_field_custom_css';
+    $field_name  = $this->option_field_name . "[$field_id]";
+    $field_value = $this->options[ $field_id ];
+
+    printf(
+      '<textarea id="%s" name="%s" type="textarea">%s</textarea>',
+      $field_id,
+      $field_name,
+      $field_value
+    );
+  }
+
+
   /*================================================================ Option
    */
 
@@ -182,6 +220,7 @@ class Grayscale_Body {
     //   'gsb_field_is_enabled'             => 1
     //   'gsb_field_is_enable_switcher'     => 0
     //   'gsb_field_switcher_position'      => 'top-right'
+    //   'gsb_field_custom_css'             => ''
     // ]
 
     $options = $this->options;
@@ -192,9 +231,12 @@ class Grayscale_Body {
     if ( ! isset( $options['gsb_field_is_enable_switcher'] ) ) {
       $options['gsb_field_is_enable_switcher'] = 0;
     }
-
     if ( ! isset( $options['gsb_field_switcher_position'] ) || ( $options['gsb_field_switcher_position'] === '' ) ) {
       $options['gsb_field_switcher_position'] = 'top-right';
+    }
+
+    if ( ! isset( $options['gsb_field_custom_css'] ) ) {
+      $options['gsb_field_custom_css'] = '';
     }
 
     $this->options = $options;
@@ -243,8 +285,20 @@ class Grayscale_Body {
       .form-table th,
       .form-table td {
         padding: 0;
+        padding-bottom: 6px;
         line-height: 30px;
         height: 30px;
+      }
+
+      #gsb_field_custom_css {
+
+      }
+
+      @media (min-width: 768px) {
+        #gsb_field_custom_css {
+          min-width: 600px;
+          min-height: 300px;
+        }
       }
     </style>
     <?php
@@ -271,6 +325,7 @@ class Grayscale_Body {
     // - is_enabled
     // - is_enable_switcher
     // - switcher_position
+    // - custom_css
     add_settings_field(
       'gsb_field_is_enabled',
       'Enable',
@@ -294,6 +349,15 @@ class Grayscale_Body {
       $this->menu_page,
       $section_id
     );
+
+    add_settings_field(
+      'gsb_field_custom_css',
+      'Custom CSS',
+      array( $this, 'gsb_field_custom_css_callback' ),
+      $this->menu_page,
+      $section_id
+    );
+
   }
 
   public function print_section_info() {
@@ -311,6 +375,8 @@ class Grayscale_Body {
     // text
     $text_input_ids = array(
       'gsb_field_switcher_position',
+      'gsb_field_custom_css',
+
     );
     foreach ( $text_input_ids as $text_input_id ) {
       $result[ $text_input_id ] = isset( $input[ $text_input_id ] )
