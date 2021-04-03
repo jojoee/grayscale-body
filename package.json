@@ -11,6 +11,9 @@
   },
   "author": "Nathachai Thongniran <inid3a@gmail.com>",
   "license": "GPL-2.0+",
+  "engines": {
+    "node": ">=8.0.0"
+  },
   "bugs": {
     "url": "https://github.com/jojoee/grayscale-body/issues"
   },
