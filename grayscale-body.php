@@ -359,7 +359,7 @@ class Grayscale_Body {
     // - custom_css
     add_settings_field(
       'gsb_field_is_enabled',
-      'Enable',
+      'Plugin: enable the plugin',
       array( $this, 'gsb_field_is_enabled_callback' ),
       $this->menu_page,
       $section_id
@@ -367,7 +367,7 @@ class Grayscale_Body {
 
     add_settings_field(
       'gsb_field_is_enable_switcher',
-      'Enable switcher',
+      'Switcher: enable the switcher',
       array( $this, 'gsb_field_is_enable_switcher_callback' ),
       $this->menu_page,
       $section_id
