@@ -53,6 +53,9 @@ it add `css` filter property into `body`
 
 == Upgrade Notice ==
 
+= 1.2.6 =
+* Fix bug, frontend is not working
+
 = 1.2.5 =
 * Retest the plugin against WordPress 5.7
 * Default mode
