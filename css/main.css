@@ -23,6 +23,8 @@ body.gsb-color {
   cursor: pointer;
   box-sizing: border-box;
   z-index: 999;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .gsb-switcher:active {
