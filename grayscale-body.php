@@ -165,6 +165,35 @@ class Grayscale_Body {
     );
   }
 
+  public function gsb_field_default_mode_callback() {
+    $field_id   = 'gsb_field_default_mode';
+    $field_name = $this->option_field_name . "[$field_id]";
+    $positions  = array(
+      array(
+        'value' => 'color',
+        'name'  => 'Color',
+      ),
+      array(
+        'value' => 'grayscale',
+        'name'  => 'Grayscale',
+      ),
+    );
+
+    printf( '<select id="%s" name="%s">', $field_id, $field_name );
+    foreach ( $positions as $position ) {
+      $value       = $position['value'];
+      $name        = $position['name'];
+      $select_attr = selected( $this->options[ $field_id ], $value, FALSE );
+
+      printf( '<option value="%s" %s>%s</option>',
+        $value,
+        $select_attr,
+        $name
+      );
+    }
+    echo '</select>';
+  }
+
   public function gsb_field_switcher_position_callback() {
     $field_id   = 'gsb_field_switcher_position';
     $field_name = $this->option_field_name . "[$field_id]";
@@ -238,6 +267,7 @@ class Grayscale_Body {
     // [
     //   'gsb_field_is_enabled'             => 1
     //   'gsb_field_is_enable_switcher'     => 0
+    //   'gsb_field_default_mode'           => 'grayscale'
     //   'gsb_field_switcher_position'      => 'top-right'
     //   'gsb_field_ignored_post_ids'       => ''
     //   'gsb_field_custom_css'             => ''
@@ -250,6 +280,9 @@ class Grayscale_Body {
     }
     if ( ! isset( $options['gsb_field_is_enable_switcher'] ) ) {
       $options['gsb_field_is_enable_switcher'] = 0;
+    }
+    if ( ! isset( $options['gsb_field_default_mode'] ) || ( $options['gsb_field_default_mode'] === '' ) ) {
+      $options['gsb_field_default_mode'] = 'grayscale';
     }
     if ( ! isset( $options['gsb_field_switcher_position'] ) || ( $options['gsb_field_switcher_position'] === '' ) ) {
       $options['gsb_field_switcher_position'] = 'top-right';
@@ -354,6 +387,7 @@ class Grayscale_Body {
     // option field(s)
     // - is_enabled
     // - is_enable_switcher
+    // - default_mode
     // - switcher_position
     // - ignored_post_ids
     // - custom_css
@@ -369,6 +403,14 @@ class Grayscale_Body {
       'gsb_field_is_enable_switcher',
       'Switcher: enable the switcher',
       array( $this, 'gsb_field_is_enable_switcher_callback' ),
+      $this->menu_page,
+      $section_id
+    );
+
+    add_settings_field(
+      'gsb_field_default_mode',
+      'Default mode',
+      array( $this, 'gsb_field_default_mode_callback' ),
       $this->menu_page,
       $section_id
     );
@@ -413,6 +455,7 @@ class Grayscale_Body {
 
     // text
     $text_input_ids = array(
+      'gsb_field_default_mode',
       'gsb_field_switcher_position',
       'gsb_field_ignored_post_ids',
       'gsb_field_custom_css',

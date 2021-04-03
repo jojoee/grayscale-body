@@ -28,10 +28,11 @@ var GrayscaleBody = function () {
    */
 
   this.getCurrentStateFromLocalStorage = function () {
+    var initState = this.option.gsb_field_default_mode
     var state = localStorage.getItem(this.localStorageStateKey)
 
     if (!state) {
-      state = this.grayscaleStateName
+      state = initState || this.grayscaleStateName
     }
 
     return state
