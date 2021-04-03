@@ -16,11 +16,11 @@ define( 'GSB_BASE_FILE', plugin_basename( __FILE__ ) );
 class Grayscale_Body {
 
   public function __construct() {
-    $this->is_debug = false;
-    $this->menu_page = 'grayscale-body';
+    $this->is_debug          = FALSE;
+    $this->menu_page         = 'grayscale-body';
     $this->option_group_name = 'gsb_option_group';
     $this->option_field_name = 'gsb_option_field';
-    $this->options = get_option( $this->option_field_name );
+    $this->options           = get_option( $this->option_field_name );
 
     // set default prop
     // for only
@@ -32,7 +32,10 @@ class Grayscale_Body {
     add_action( 'admin_init', array( $this, 'gsb_page_init' ) );
 
     // add plugin link
-    add_filter( 'plugin_action_links', array( $this, 'gsb_plugin_action_links' ), 10, 4 );
+    add_filter( 'plugin_action_links', array(
+      $this,
+      'gsb_plugin_action_links',
+    ), 10, 4 );
 
     // hook
     add_action( 'wp_enqueue_scripts', array( $this, 'gsb_enqueue_scripts' ) );
@@ -42,19 +45,21 @@ class Grayscale_Body {
   /*================================================================ Debug
    */
 
-  private function dd( $var = null, $is_die = true ) {
+  private function dd( $var = NULL, $is_die = TRUE ) {
     echo '<pre>';
     print_r( $var );
     echo '</pre>';
 
-    if ( $is_die ) die();
+    if ( $is_die ) {
+      die();
+    }
   }
 
-  private function da( $var = null ) {
-    $this->dd( $var, false );
+  private function da( $var = NULL ) {
+    $this->dd( $var, FALSE );
   }
 
-  private function dhead( $head, $var, $is_die = false ) {
+  private function dhead( $head, $var, $is_die = FALSE ) {
     echo '<div class="debug-box">';
     echo '================';
     echo ' ' . $head . ' ';
@@ -64,7 +69,7 @@ class Grayscale_Body {
     echo '</div>';
   }
 
-  private function dump( $is_die = false ) {
+  private function dump( $is_die = FALSE ) {
     $this->da( $this->options, $is_die );
   }
 
@@ -74,22 +79,22 @@ class Grayscale_Body {
 
   /*================================================================ Public
    */
-  
+
   public function gsb_head() { ?>
     <script>
-      var gsbOption = '<?php echo json_encode( $this->options ); ?>';
+      var gsbOption = '<?php echo json_encode( $this->options ); ?>'
     </script>
     <?php
   }
 
   public function gsb_enqueue_scripts() {
-    $is_enabled = $this->options['gsb_field_is_enabled'];
+    $is_enabled         = $this->options['gsb_field_is_enabled'];
     $is_enable_switcher = $this->options['gsb_field_is_enable_switcher'];
 
     if ( $is_enabled ) {
       if ( $is_enable_switcher ) {
         wp_enqueue_style( 'gsb-main-style', plugins_url( 'css/main.css', __FILE__ ) );
-        wp_enqueue_script( 'gsb-main-script', plugins_url('js/main.js', __FILE__), array(), '120', true);
+        wp_enqueue_script( 'gsb-main-script', plugins_url( 'js/main.js', __FILE__ ), array(), '120', TRUE );
 
       } else {
         wp_enqueue_style( 'gsb-main-style-noswitcher', plugins_url( 'css/main-noswitcher.css', __FILE__ ) );
@@ -99,12 +104,12 @@ class Grayscale_Body {
 
   /*================================================================ Callback
    */
-  
+
   public function gsb_field_is_enabled_callback() {
-    $field_id = 'gsb_field_is_enabled';
-    $field_name = $this->option_field_name . "[$field_id]";
+    $field_id    = 'gsb_field_is_enabled';
+    $field_name  = $this->option_field_name . "[$field_id]";
     $field_value = 1;
-    $check_attr = checked( 1, $this->options[ $field_id ], false );
+    $check_attr  = checked( 1, $this->options[ $field_id ], FALSE );
 
     printf(
       '<input type="checkbox" id="%s" name="%s" value="%s" %s />',
@@ -116,10 +121,10 @@ class Grayscale_Body {
   }
 
   public function gsb_field_is_enable_switcher_callback() {
-    $field_id = 'gsb_field_is_enable_switcher';
-    $field_name = $this->option_field_name . "[$field_id]";
+    $field_id    = 'gsb_field_is_enable_switcher';
+    $field_name  = $this->option_field_name . "[$field_id]";
     $field_value = 1;
-    $check_attr = checked( 1, $this->options[ $field_id ], false );
+    $check_attr  = checked( 1, $this->options[ $field_id ], FALSE );
 
     printf(
       '<input type="checkbox" id="%s" name="%s" value="%s" %s />',
@@ -131,32 +136,32 @@ class Grayscale_Body {
   }
 
   public function gsb_field_switcher_position_callback() {
-    $field_id = 'gsb_field_switcher_position';
+    $field_id   = 'gsb_field_switcher_position';
     $field_name = $this->option_field_name . "[$field_id]";
-    $positions = array(
+    $positions  = array(
       array(
-        'value'     => 'top-left',
-        'name'      => 'Top left'
+        'value' => 'top-left',
+        'name'  => 'Top left',
       ),
       array(
-        'value'     => 'top-right',
-        'name'      => 'Top right'
+        'value' => 'top-right',
+        'name'  => 'Top right',
       ),
       array(
-        'value'     => 'bottom-left',
-        'name'      => 'Bottom left'
+        'value' => 'bottom-left',
+        'name'  => 'Bottom left',
       ),
       array(
-        'value'     => 'bottom-right',
-        'name'      => 'Bottom right'
-      )
+        'value' => 'bottom-right',
+        'name'  => 'Bottom right',
+      ),
     );
 
     printf( '<select id="%s" name="%s">', $field_id, $field_name );
     foreach ( $positions as $position ) {
-      $value = $position['value'];
-      $name = $position['name'];
-      $select_attr = selected( $this->options[ $field_id ], $value, false );
+      $value       = $position['value'];
+      $name        = $position['name'];
+      $select_attr = selected( $this->options[ $field_id ], $value, FALSE );
 
       printf( '<option value="%s" %s>%s</option>',
         $value,
@@ -181,8 +186,12 @@ class Grayscale_Body {
 
     $options = $this->options;
 
-    if ( ! isset( $options['gsb_field_is_enabled'] ) )              $options['gsb_field_is_enabled'] = 1;
-    if ( ! isset( $options['gsb_field_is_enable_switcher'] ) )      $options['gsb_field_is_enable_switcher'] = 0;
+    if ( ! isset( $options['gsb_field_is_enabled'] ) ) {
+      $options['gsb_field_is_enabled'] = 1;
+    }
+    if ( ! isset( $options['gsb_field_is_enable_switcher'] ) ) {
+      $options['gsb_field_is_enable_switcher'] = 0;
+    }
 
     if ( ! isset( $options['gsb_field_switcher_position'] ) || ( $options['gsb_field_switcher_position'] === '' ) ) {
       $options['gsb_field_switcher_position'] = 'top-right';
@@ -209,31 +218,34 @@ class Grayscale_Body {
 
   /**
    * Options page callback
-   * 
+   *
    * TODO: relocate style
    */
   public function gsb_admin_page() { ?>
-    <?php if ( $this->is_debug ) $this->dump(); ?>
+    <?php if ( $this->is_debug ) {
+      $this->dump();
+    } ?>
     <div class="wrap">
       <h1>Grayscale Body</h1>
       <form method="post" action="options.php">
         <?php
-          settings_fields( $this->option_group_name );
-          do_settings_sections( $this->menu_page );
-          submit_button();
+        settings_fields( $this->option_group_name );
+        do_settings_sections( $this->menu_page );
+        submit_button();
         ?>
       </form>
     </div>
     <style>
-    .debug-box {
-      padding: 12px 0;
-    }
-    .form-table th,
-    .form-table td {
-      padding: 0;
-      line-height: 30px;
-      height: 30px;
-    }
+      .debug-box {
+        padding: 12px 0;
+      }
+
+      .form-table th,
+      .form-table td {
+        padding: 0;
+        line-height: 30px;
+        height: 30px;
+      }
     </style>
     <?php
   }
@@ -298,7 +310,7 @@ class Grayscale_Body {
 
     // text
     $text_input_ids = array(
-      'gsb_field_switcher_position'
+      'gsb_field_switcher_position',
     );
     foreach ( $text_input_ids as $text_input_id ) {
       $result[ $text_input_id ] = isset( $input[ $text_input_id ] )
@@ -309,7 +321,7 @@ class Grayscale_Body {
     // number
     $number_input_ids = array(
       'gsb_field_is_enabled',
-      'gsb_field_is_enable_switcher'
+      'gsb_field_is_enable_switcher',
     );
     foreach ( $number_input_ids as $number_input_id ) {
       $result[ $number_input_id ] = isset( $input[ $number_input_id ] )
@@ -329,6 +341,7 @@ class Grayscale_Body {
 
     return array_merge( $links, $plugin_link );
   }
+
 }
 
 $grayscale_body = new Grayscale_Body();
