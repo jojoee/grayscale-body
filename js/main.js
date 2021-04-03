@@ -96,10 +96,10 @@ var GrayscaleBody = function () {
   }
 
   this.init = function () {
+    this.option = JSON.parse(gsbOption)
     this.bodyEle = document.getElementsByTagName('body')[0]
     this.prevState = this.getCurrentStateFromLocalStorage()
     this.currentState = this.getCurrentStateFromLocalStorage()
-    this.option = JSON.parse(gsbOption)
 
     this.updateBodyCurrentState()
     this.initSwitcher()
