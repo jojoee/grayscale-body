@@ -112,10 +112,16 @@ class Grayscale_Body {
   }
 
   public function gsb_enqueue_scripts() {
+    global $post;
+
     $is_enabled         = $this->options['gsb_field_is_enabled'];
     $is_enable_switcher = $this->options['gsb_field_is_enable_switcher'];
+    $ignored_post_ids   = $this->options['gsb_field_ignored_post_ids'];
+    $ignored_post_ids   = explode( ",", $ignored_post_ids );
+    $post_id            = $post->ID;
+    $is_ignored_post    = in_array( $post_id, $ignored_post_ids );
 
-    if ( $is_enabled ) {
+    if ( $is_enabled && ! $is_ignored_post ) {
       if ( $is_enable_switcher ) {
         wp_enqueue_style( 'gsb-main-style', plugins_url( 'css/main.css', __FILE__ ) );
         wp_enqueue_script( 'gsb-main-script', plugins_url( 'js/main.js', __FILE__ ), array(), '120', TRUE );
@@ -196,6 +202,20 @@ class Grayscale_Body {
     echo '</select>';
   }
 
+  public function gsb_field_ignored_post_ids_callback() {
+    $field_id    = 'gsb_field_ignored_post_ids';
+    $field_name  = $this->option_field_name . "[$field_id]";
+    $field_value = $this->options[ $field_id ];
+
+    printf(
+      '<input type="text" id="%s" name="%s" value="%s" placeholder="%s">',
+      $field_id,
+      $field_name,
+      $field_value,
+      "ignored post ids for examples: 1,3,4"
+    );
+  }
+
   public function gsb_field_custom_css_callback() {
     $field_id    = 'gsb_field_custom_css';
     $field_name  = $this->option_field_name . "[$field_id]";
@@ -209,7 +229,6 @@ class Grayscale_Body {
     );
   }
 
-
   /*================================================================ Option
    */
 
@@ -220,6 +239,7 @@ class Grayscale_Body {
     //   'gsb_field_is_enabled'             => 1
     //   'gsb_field_is_enable_switcher'     => 0
     //   'gsb_field_switcher_position'      => 'top-right'
+    //   'gsb_field_ignored_post_ids'       => ''
     //   'gsb_field_custom_css'             => ''
     // ]
 
@@ -234,7 +254,9 @@ class Grayscale_Body {
     if ( ! isset( $options['gsb_field_switcher_position'] ) || ( $options['gsb_field_switcher_position'] === '' ) ) {
       $options['gsb_field_switcher_position'] = 'top-right';
     }
-
+    if ( ! isset( $options['gsb_field_ignored_post_ids'] ) ) {
+      $options['gsb_field_ignored_post_ids'] = '';
+    }
     if ( ! isset( $options['gsb_field_custom_css'] ) ) {
       $options['gsb_field_custom_css'] = '';
     }
@@ -290,11 +312,19 @@ class Grayscale_Body {
         height: 30px;
       }
 
+      #gsb_field_ignored_post_ids {
+
+      }
+
       #gsb_field_custom_css {
 
       }
 
       @media (min-width: 768px) {
+        #gsb_field_ignored_post_ids {
+          min-width: 600px;
+        }
+
         #gsb_field_custom_css {
           min-width: 600px;
           min-height: 300px;
@@ -325,6 +355,7 @@ class Grayscale_Body {
     // - is_enabled
     // - is_enable_switcher
     // - switcher_position
+    // - ignored_post_ids
     // - custom_css
     add_settings_field(
       'gsb_field_is_enabled',
@@ -346,6 +377,14 @@ class Grayscale_Body {
       'gsb_field_switcher_position',
       'Switcher: position',
       array( $this, 'gsb_field_switcher_position_callback' ),
+      $this->menu_page,
+      $section_id
+    );
+
+    add_settings_field(
+      'gsb_field_ignored_post_ids',
+      'Ignored Post IDs',
+      array( $this, 'gsb_field_ignored_post_ids_callback' ),
       $this->menu_page,
       $section_id
     );
@@ -375,6 +414,7 @@ class Grayscale_Body {
     // text
     $text_input_ids = array(
       'gsb_field_switcher_position',
+      'gsb_field_ignored_post_ids',
       'gsb_field_custom_css',
 
     );
