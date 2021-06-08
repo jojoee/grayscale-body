@@ -111,6 +111,16 @@ class Grayscale_Body {
     <?php
   }
 
+  public function gsb_add_scripts( $is_enable_switcher = TRUE ) {
+    if ( $is_enable_switcher ) {
+      wp_enqueue_style( 'gsb-main-style', plugins_url( 'css/main.css', __FILE__ ) );
+      wp_enqueue_script( 'gsb-main-script', plugins_url( 'js/main.js', __FILE__ ), array(), '120', TRUE );
+
+    } else {
+      wp_enqueue_style( 'gsb-main-style-noswitcher', plugins_url( 'css/main-noswitcher.css', __FILE__ ) );
+    }
+  }
+
   public function gsb_enqueue_scripts() {
     global $post;
 
@@ -121,13 +131,14 @@ class Grayscale_Body {
     $post_id            = $post->ID;
     $is_ignored_post    = in_array( $post_id, $ignored_post_ids );
 
-    if ( $is_enabled && ! $is_ignored_post ) {
-      if ( $is_enable_switcher ) {
-        wp_enqueue_style( 'gsb-main-style', plugins_url( 'css/main.css', __FILE__ ) );
-        wp_enqueue_script( 'gsb-main-script', plugins_url( 'js/main.js', __FILE__ ), array(), '120', TRUE );
-
+    if ( $is_enabled ) {
+      // some list-page or archive-page returns a post_id, so we need to address it first
+      if ( is_single() ) {
+        if ( ! $is_ignored_post ) {
+          $this->gsb_add_scripts( $is_enable_switcher );
+        }
       } else {
-        wp_enqueue_style( 'gsb-main-style-noswitcher', plugins_url( 'css/main-noswitcher.css', __FILE__ ) );
+        $this->gsb_add_scripts( $is_enable_switcher );
       }
     }
   }
