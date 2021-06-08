@@ -4,7 +4,7 @@ Contributors: jojoee
 Donate link: 
 Tags: grayscale, black, white, black and white, site, convert, conversion, CSS, CSS3, filter
 Requires at least: 3.0.1
-Tested up to: 5.7
+Tested up to: 5.7.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -52,6 +52,9 @@ it add `css` filter property into `body`
 3. Theme option (screenshot-3.jpg)
 
 == Upgrade Notice ==
+
+= 1.2.7 =
+* Fix bug, "ignored post ids" feature must ignore archive or listing page
 
 = 1.2.6 =
 * Fix bug, frontend is not working

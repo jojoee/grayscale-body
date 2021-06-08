@@ -3,7 +3,7 @@
 Plugin Name: Grayscale Body
 Plugin URI: https://wordpress.org/plugins/grayscale-body/
 Description: Automatically turn the site to grayscale
-Version: 1.2.6
+Version: 1.2.7
 Author: Nathachai Thongniran
 Author URI: http://jojoee.com/
 Text Domain: gsb
